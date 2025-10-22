@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events | University Club Hub</title>
+  <style>
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f9fa;
+    }
+    
+    /* Header styles */
+    .header {
+      background-color: #004d99;
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav-list {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(255,255,255,0.2);
+    }
+    
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    h1 {
+      color: #004d99;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      margin-bottom: 2rem;
+    }
+    
+    /* Slideshow styles */
+    .slideshow-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    #slideshow-inner {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 400px;
+    }
+    
+    .event-slide {
+      min-width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    
+    .event-slide.active {
+      opacity: 1;
+    }
+    
+    .event-slide h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .event-slide p {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    
+    /* Navigation arrows */
+    .slide-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border: none;
+      z-index: 10;
+      transition: background-color 0.3s;
+    }
+    
+    .slide-nav:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+    
+    .prev {
+      left: 0;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    .next {
+      right: 0;
+      border-radius: 4px 0 0 4px;
+    }
+    
+    /* Indicators */
+    .slide-indicators {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+    
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .indicator.active, .indicator:hover {
+      background-color: white;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: #004d99;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .event-slide {
+        padding: 1.5rem;
+      }
+      
+      .event-slide h3 {
+        font-size: 1.5rem;
+      }
+      
+      .event-slide p {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .slideshow-container {
+        height: 300px;
+      }
+      
+      #slideshow-inner {
+        height: 300px;
+      }
+      
+      .event-slide {
+        padding: 1rem;
+      }
+      
+      .event-slide h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">ClubHub</a>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="clubs.html" class="nav-link">Clubs</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="contacts.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="page-content active">
+      <h1>Upcoming Events & Activities</h1>
+      <p>Check out our dynamic gallery of highlights from recent and upcoming campus events.</p>
+
+      <div class="slideshow-container">
+        <div id="slideshow-inner">
+          <div class="event-slide active" data-event-id="0"
+               style="background-image: url('https://placehold.co/800x400/004d99/ffffff?text=Tech+Club+Hackathon');">
+            <h3>Tech Club Hackathon</h3>
+            <p><time datetime="2025-10-25">October 25, 2025</time> | Building the next big thing!</p>
+          </div>
+
+          <div class="event-slide" data-event-id="1"
+               style="background-image: url('https://placehold.co/800x400/006633/ffffff?text=Drama+Club+Performance');">
+            <h3>Drama Club Performance</h3>
+            <p><time datetime="2025-11-10">November 10, 2025</time> | "The Student's Dilemma"</p>
+          </div>
+
+          <div class="event-slide" data-event-id="2"
+               style="background-image: url('https://placehold.co/800x400/990000/ffffff?text=Sports+Day+Tournament');">
+            <h3>Sports Day Tournament</h3>
+            <p><time datetime="2025-12-01">December 1, 2025</time> | End-of-Semester Fun</p>
+          </div>
+        </div>
+
+        <!-- Slideshow Navigation -->
+        <button class="slide-nav prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slide-nav next" onclick="changeSlide(1)">&#10095;</button>
+        
+        <!-- Slide Indicators -->
+        <div class="slide-indicators">
+          <span class="indicator active" onclick="currentSlide(0)"></span>
+          <span class="indicator" onclick="currentSlide(1)"></span>
+          <span class="indicator" onclick="currentSlide(2)"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 University Club Hub. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript for Slideshow -->
+  <script>
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("event-slide");
+    const indicators = document.getElementsByClassName("indicator");
+    
+    // Initialize the slideshow
+    showSlides(slideIndex);
+    
+    // Auto advance slides every 5 seconds
+    let slideInterval = setInterval(() => {
+      changeSlide(1);
+    }, 5000);
+    
+    function showSlides(n) {
+      // Reset all slides to inactive
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+        indicators[i].classList.remove("active");
+      }
+      
+      // Handle index boundaries
+      if (n >= slides.length) {
+        slideIndex = 0;
+      } else if (n < 0) {
+        slideIndex = slides.length - 1;
+      } else {
+        slideIndex = n;
+      }
+      
+      // Activate current slide and indicator
+      slides[slideIndex].classList.add("active");
+      indicators[slideIndex].classList.add("active");
+      
+      // Reset the auto-advance timer
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => {
+        changeSlide(1);
+      }, 5000);
+    }
+    
+    function changeSlide(n) {
+      showSlides(slideIndex + n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(n);
+    }
+  </script>
+</body>
+</html>

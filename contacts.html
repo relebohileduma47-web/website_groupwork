@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | University Club Hub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">UNIVERSITY CLUBHUB</a>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="clubs.html" class="nav-link">Clubs</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="contacts.html" class="nav-link active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contact Section -->
+  <main>
+    <section id="contact" class="page-content active">
+      <h1>Contact Us</h1>
+      <p>Have a question or a general inquiry? Fill out the form below, and we'll get back to you as soon as possible.</p>
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="cName">Your Name (Required)</label>
+          <input type="text" id="cName" name="cName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="cEmail">Email Address (Required)</label>
+          <input type="email" id="cEmail" name="cEmail" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="cSubject">Subject</label>
+          <input type="text" id="cSubject" name="cSubject">
+        </div>
+
+        <div class="form-group">
+          <label for="cMessage">Message (Required)</label>
+          <textarea id="cMessage" name="cMessage" rows="5" required></textarea>
+        </div>
+
+        <button type="submit">Send Inquiry</button>
+      </form>
+
+      <div id="message-box" style="display:none; margin-top:1rem; padding:1rem; border-radius:5px; text-align:center;"></div>
+      
+      <address style="margin-top: 30px; font-style: normal;">
+        <h3>Club Office:</h3>
+        <p>Student Union Building, Room 101</p>
+        <p>Email: <a href="mailto:info@clubhub.edu" style="color: var(--primary-color);">info@clubhub.edu</a></p>
+      </address>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 University Club Hub. All rights reserved.</p>
+  </footer>
+
+  <!-- Contact Form Validation -->
+  <script>
+    const form = document.getElementById("contact-form");
+    const messageBox = document.getElementById("message-box");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("cName").value.trim();
+      const email = document.getElementById("cEmail").value.trim();
+      const message = document.getElementById("cMessage").value.trim();
+
+      if (!name || !email || !message) {
+        showMessage("⚠️ Please fill in all required fields.", true);
+        return;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        showMessage("❌ Please enter a valid email address.", true);
+        return;
+      }
+
+      showMessage("✅ Your inquiry has been sent successfully!");
+      form.reset();
+    });
+
+    function showMessage(text, isError = false) {
+      messageBox.textContent = text;
+      messageBox.style.backgroundColor = isError ? "red" : "var(--primary-color)";
+      messageBox.style.color = "#fff";
+      messageBox.style.display = "block";
+      setTimeout(() => (messageBox.style.display = "none"), 3000);
+    }
+  </script>
+</body>
+</html>

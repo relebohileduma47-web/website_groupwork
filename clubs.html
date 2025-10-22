@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>University Club Hub | Clubs </title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">UNIVERSITY CLUBHUB</a>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="clubs.html" class="nav-link active">Clubs</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="contacts.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Clubs Section -->
+  <main>
+    <section id="clubs" class="page-content active">
+      <h1>Our Student Clubs</h1>
+      <p>Explore the various student clubs you can join at our university. Whether you love coding, performing, or debating, there’s a place for you!</p>
+
+      <!-- Club Grid -->
+      <div class="grid">
+        <div class="card">
+          <img src="FILM.jpeg" alt="Drama Club" style="width:100%; border-radius:10px;">
+          <h3>🎭 Drama Club</h3>
+          <p>Express your creativity through acting, directing, and stage performance. No experience needed!</p>
+        </div>
+
+        <div class="card">
+          <img src="download (1).jpeg" alt="Tech Club" style="width:100%; border-radius:10px;">
+          <h3>💻 Tech Club</h3>
+          <p>Join the world of coding, robotics, and innovation. Collaborate on exciting technology projects and hackathons.</p>
+        </div>
+
+        <div class="card">
+          <img src="debate1.jpeg" alt="Debate Club" style="width:100%; border-radius:10px;">
+          <h3>🗣 Debate Club</h3>
+          <p>Sharpen your public speaking and analytical skills by engaging in stimulating debates and discussions.</p>
+        </div>
+
+        <div class="card">
+          <img src="sports2.jpeg" alt="Sports Club" style="width:100%; border-radius:10px;">
+          <h3>⚽ Sports Club</h3>
+          <p>Stay active and build teamwork through different sports — football, basketball, athletics, and more!</p>
+        </div>
+      </div>
+
+      <!-- Join a Club Form -->
+      <h2 style="margin-top:2rem;">Join a Club</h2>
+      <form id="join-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="example@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="club">Select Club</label>
+          <select id="club" name="club" required>
+            <option value="">-- Choose a Club --</option>
+            <option value="Drama Club">Drama Club</option>
+            <option value="Tech Club">Tech Club</option>
+            <option value="Debate Club">Debate Club</option>
+            <option value="Sports Club">Sports Club</option>
+          </select>
+        </div>
+
+        <button type="submit">Join Now</button>
+      </form>
+
+      <div id="join-message" style="display:none; margin-top:1rem; padding:1rem; border-radius:5px; text-align:center;"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 University Club Hub. All rights reserved.</p>
+  </footer>
+
+  <!-- Join Form Script -->
+  <script>
+    const joinForm = document.getElementById("join-form");
+    const joinMessage = document.getElementById("join-message");
+
+    // Local array to store members
+    const members = [];
+
+    joinForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const club = document.getElementById("club").value;
+
+      if (!name || !email || !club) {
+        showJoinMessage("⚠️ Please fill in all fields.", true);
+        return;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        showJoinMessage("❌ Please enter a valid email address.", true);
+        return;
+      }
+
+      // Check if member already exists in the same club
+      const existingMember = members.find(
+        (m) => m.email === email && m.club === club
+      );
+
+      if (existingMember) {
+        showJoinMessage(`ℹ️ ${name}, you are already a member of the ${club}.`, true);
+        return;
+      }
+
+      // Add new member to the array
+      members.push({ name, email, club });
+
+      showJoinMessage(`✅ Thank you, ${name}! You have successfully joined the ${club}.`);
+      joinForm.reset();
+
+      console.log("Current Members:", members); // Debugging: see members in console
+    });
+
+    function showJoinMessage(text, isError = false) {
+      joinMessage.textContent = text;
+      joinMessage.style.backgroundColor = isError ? "#ff7a59" : "#1f6feb";
+      joinMessage.style.color = "#fff";
+      joinMessage.style.display = "block";
+      setTimeout(() => (joinMessage.style.display = "none"), 3500);
+    }
+  </script>
+</body>
+</html>
